@@ -1,0 +1,3 @@
+export const GLOBAL_TOGGLE_MENU_VISIBLE = 'GLOBAL_TOGGLE_MENU_VISIBLE';
+export const HOME_MIN = 'HOME_MIN';
+export const HOME_SAVE = 'HOME_SAVE';

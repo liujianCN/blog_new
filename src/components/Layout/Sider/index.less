@@ -1,0 +1,85 @@
+// /* 整体布局 */
+
+// .sider,
+// .brokenSider {
+//   background-color: #fff;
+
+//   :global(.ant-menu) {
+//     height: 100%;
+//     overflow-x: hidden;
+//     overflow-y: auto;
+//     padding-top: 24px;
+//     background: transparent;
+//     &::-webkit-scrollbar {
+//       width: 2px;
+//     }
+//     &::-webkit-scrollbar-thumb {
+//       border-radius: 8px;
+//       background: #ddd;
+//     }
+//   }
+
+//   :global {
+//     .ant-menu-item-group-title {
+//       position: relative;
+//       &::after {
+//         content: '';
+//         display: block;
+//         width: 160px;
+//         position: absolute;
+//         left: 20px;
+//         bottom: 0;
+//         border-bottom: 1px solid #f0f0f0;
+//       }
+//     }
+//   }
+// }
+// .brokenSider {
+//   position: fixed;
+//   top: 0;
+//   bottom: 0;
+//   z-index: 3;
+//   &::after {
+//     content: '';
+//     position: fixed;
+//     top: 0;
+//     height: 100vh;
+//     width: 100vw;
+//     z-index: -1;
+//     background: rgba(0, 0, 0, 0.6);
+//   }
+//   &:global(.ant-layout-sider-collapsed::after) {
+//     background: transparent;
+//   }
+//   &:global(.ant-layout-sider-collapsed) {
+//     width: 200px !important;
+//     flex: 0 0 200px !important;
+//     max-width: 200px !important;
+//     min-width: 200px !important;
+//     transform: translateX(-200px);
+//     z-index: 2;
+//   }
+// }
+
+// .logo {
+//   // color: @whiteColor;
+//   // font-size: @fontSizeBig;
+//   padding: 12px;
+//   height: 48px;
+//   background: #fff;
+// }
+
+.menuButton {
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  margin: 30px;
+}
+
+.menu {
+  background: transparent !important;
+  &::-webkit-scrollbar {
+    width: 2px;
+  }
+}

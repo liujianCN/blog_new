@@ -1,0 +1,78 @@
+.header {
+  height: 48px;
+  line-height: 48px;
+  padding: 0 30px;
+  background: #fff;
+  box-shadow: 0 2px 8px #f0f1f2;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  z-index: 2;
+
+  .logo {
+    width: 170px;
+    padding-right: 30px;
+    text-align: center;
+    position: relative;
+    &::after {
+      content: '';
+      display: block;
+      position: absolute;
+      height: 30px;
+      top: 9px;
+      right: 0;
+      border-right: 1px solid #f0f0f0;
+    }
+  }
+
+  .right {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    padding-left: 30px;
+    :global {
+      .ant-input {
+        border: none;
+        border-bottom: 1px solid #f0f0f0;
+        &:focus {
+          box-shadow: none;
+        }
+      }
+      .ant-input-search-button {
+        height: 31px;
+        border: none;
+        border-bottom: 1px solid #f0f0f0;
+        box-shadow: none;
+      }
+    }
+  }
+}
+
+.smHeader {
+  height: 48px;
+  line-height: 48px;
+  background: #fff;
+  box-shadow: 0 2px 8px #f0f1f2;
+  display: flex;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+  .fold,
+  .menu {
+    position: absolute;
+    width: 48px;
+    height: 48px;
+    line-height: 48px;
+    top: 0;
+  }
+  .fold {
+    left: 0;
+  }
+  .menu {
+    right: 0;
+  }
+  .smLogo {
+    flex: 1;
+    text-align: center;
+  }
+}
