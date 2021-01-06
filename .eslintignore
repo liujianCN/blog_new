@@ -1,0 +1,13 @@
+app/proxy*
+coverage
+fntest
+mocks
+node_modules
+spm_modules
+test/fixtures
+dist
+build
+public
+config
+.eslintrc*
+.prettierrc*

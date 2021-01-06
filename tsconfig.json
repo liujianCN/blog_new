@@ -1,4 +1,31 @@
 {
-  "extends": "./tsconfig.extend.json",
-  "compilerOptions": {}
+  "compilerOptions": {
+    "target": "es5",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["src/*"],
+      "@components/*": ["src/components/*"],
+      "@hooks/*": ["src/hooks/*"],
+      "@page/*": ["src/page/*"],
+      "@server/*": ["src/server/*"],
+      "@thunk/*": ["src/store/thunk/*"],
+      "@utils/*": ["src/utils/*"]
+    },
+    "experimentalDecorators": true
+  },
+  "include": ["src"]
 }
