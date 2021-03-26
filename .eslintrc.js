@@ -10,26 +10,25 @@ module.exports = {
   },
   parser: '@typescript-eslint/parser',
   extends: [
-    'plugin:react-hooks/recommended',
     'airbnb-typescript',
-    'prettier',
+    'plugin:react/recommended',
+    'plugin:react-hooks/recommended',
     'prettier/@typescript-eslint',
-    'prettier/prettier',
-    'prettier/react'
+    "plugin:prettier/recommended",
+    "prettier/react"
   ],
-  plugins: ['@typescript-eslint', 'react', 'react-hooks', 'prettier'],
+  plugins: ['@typescript-eslint', 'react', 'react-hooks'],
   parserOptions: {
     ecmaFeatures: {
       jsx: true
     },
     ecmaVersion: 11,
     sourceType: 'module',
-    project: './tsconfig.json'
+    project: './tsconfig.json',
   },
   root: true,
   rules: {
-    'react-hooks/rules-of-hooks': 'error',
-    'react-hooks/exhaustive-deps': 'warn',
+    // '@typescript-eslint/no-unused-vars': 'on',
     'prettier/prettier': 'error',
     'arrow-body-style': 'off',
     'prefer-arrow-callback': 'off',
@@ -46,6 +45,9 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     'no-console': 'off',
     'import/no-extraneous-dependencies': 'off',
+    'import/prefer-default-export': 'off',
+    'import/extensions': 'off',
+    'import/no-unresolved': 'off',
     'react/prop-types': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',

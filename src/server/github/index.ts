@@ -1,4 +1,4 @@
-import { githubRequest as request } from '@utils/request';
+import { githubRequest as request } from '@/utils/request';
 
 export type GithubReposList = Array<{
   id: number;

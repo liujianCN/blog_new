@@ -1,8 +1,21 @@
-import { createStore, applyMiddleware, compose } from 'redux';
+import { createStore, applyMiddleware, compose, AnyAction, Action } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 
-import { reducer, mySaga } from './models';
+import { rootReducer, rootSaga } from './models';
 
+const promiseMiddleware = () => (next: any) => (action: Action<string>) => {
+  // const { type } = action;
+  // if (type.startsWith('@@_effect_')) {
+  return new Promise((resolve, reject) => {
+    next({
+      resolve,
+      reject,
+      ...action
+    });
+  });
+  // }
+  // return next(action);
+};
 // create the saga middleware
 const sagaMiddleware = createSagaMiddleware();
 const composeEnhancers =
@@ -13,12 +26,12 @@ const composeEnhancers =
     : compose;
 
 const enhancer = composeEnhancers(
-  applyMiddleware(sagaMiddleware)
+  applyMiddleware(promiseMiddleware, sagaMiddleware)
   // other store enhancers if any
 );
-const store = createStore(reducer, enhancer);
+const store = createStore(rootReducer, enhancer);
 
 // then run the saga
-sagaMiddleware.run(mySaga);
+sagaMiddleware.run(rootSaga);
 
 export default store;

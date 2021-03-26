@@ -1,28 +1,40 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { useDispatch } from 'react-redux';
-import { createStore, applyMiddleware, compose, Action } from 'redux';
-import thunk, { ThunkAction } from 'redux-thunk';
-import reducer, { StoreState } from './reducer';
+/* eslint-disable import/no-cycle */
+import { createStore } from 'redux';
+import { genRootReducer, enhancer } from './d_thunk';
+import * as example from './models/example';
+import * as common from './models/common';
+import * as home from './models/home';
+import * as repos from './models/repos';
+import * as draft from './models/draft';
+import * as detail from './models/detail';
 
-const composeEnhancers =
-  typeof window === 'object' && (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-    ? (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
-        // Specify extension’s options like name, actionsBlacklist, actionsCreators, serialize...
-      })
-    : compose;
+const models = {
+  example: example.model,
+  common: common.model,
+  home: home.model,
+  repos: repos.model,
+  draft: draft.model,
+  detail: detail.model,
+};
 
-const enhancer = composeEnhancers(
-  applyMiddleware(thunk)
-  // other store enhancers if any
-);
-const store = createStore(reducer, enhancer);
+export interface StoreState {
+  example: example.State;
+  common: common.State;
+  home: home.State;
+  repos: repos.State;
+  draft: draft.State;
+  detail: detail.State;
+}
 
-export type Dispatch = typeof store.dispatch;
-export type AppThunk<ReturnType = void> = ThunkAction<
-  ReturnType,
-  StoreState,
-  unknown,
-  Action<string>
->;
-export const useThunkDispatch = () => useDispatch<Dispatch>();
-export default store;
+export const storeActions = {
+  example: example.actions,
+  common: common.actions,
+  home: home.actions,
+  repos: repos.actions,
+  draft: draft.actions,
+  detail: detail.actions,
+};
+
+export const rootReducer = genRootReducer(models);
+
+export const store = createStore(rootReducer, enhancer);

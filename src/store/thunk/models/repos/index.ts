@@ -1,39 +1,25 @@
-import { AnyAction } from 'redux';
-import { GithubBrachList, GithubReposList, GithubBrachCommitList } from '@server/github';
-import * as reposTypes from './types';
+import { actionCreatorsCreator, Model } from '@store/d_thunk';
 
-export * as reposActions from './actions';
-
-export interface IReposState {
-  repoList: GithubReposList;
-  branchList: GithubBrachList;
-  commitList: GithubBrachCommitList;
+export interface State {
+  repoList: string[];
+  branchList: string[];
+  commitList: string[];
 }
 
-const initialState: IReposState = {
+const initialState: State = {
   repoList: [],
   branchList: [],
-  commitList: []
+  commitList: [],
 };
 
-export default (state: IReposState = initialState, action: AnyAction): IReposState => {
-  switch (action.type) {
-    case reposTypes.SAVE_REPOS_LIST:
-      return {
-        ...state,
-        repoList: action.repoList
-      };
-    case reposTypes.SAVE_REPO_BRANCH_LIST:
-      return {
-        ...state,
-        branchList: action.branchList
-      };
-    case reposTypes.SAVE_REPO_BRANCH_COMMIT_LIST:
-      return {
-        ...state,
-        commitList: action.commitList
-      };
-    default:
-      return state;
-  }
+export interface EffectsPayload {}
+export interface ReducersPayload {}
+
+export const model: Model<State, EffectsPayload, ReducersPayload> = {
+  namespace: 'repos',
+  state: initialState,
+  effects: {},
+  reducers: {},
 };
+
+export const actions = actionCreatorsCreator(model);

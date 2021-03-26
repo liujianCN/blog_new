@@ -10,32 +10,22 @@ interface AxiosResponseData<T = any> {
 }
 
 interface MyAxiosInstance extends AxiosInstance {
-  request<T = any, R = AxiosResponseData<T>>(config: AxiosRequestConfig): Promise<R>;
-  get<T = any, R = AxiosResponseData<T>>(url: string, config?: AxiosRequestConfig): Promise<R>;
-  delete<T = any, R = AxiosResponseData<T>>(url: string, config?: AxiosRequestConfig): Promise<R>;
-  head<T = any, R = AxiosResponseData<T>>(url: string, config?: AxiosRequestConfig): Promise<R>;
-  options<T = any, R = AxiosResponseData<T>>(url: string, config?: AxiosRequestConfig): Promise<R>;
-  post<T = any, R = AxiosResponseData<T>>(
-    url: string,
-    data?: any,
-    config?: AxiosRequestConfig
-  ): Promise<R>;
-  put<T = any, R = AxiosResponseData<T>>(
-    url: string,
-    data?: any,
-    config?: AxiosRequestConfig
-  ): Promise<R>;
-  patch<T = any, R = AxiosResponseData<T>>(
-    url: string,
-    data?: any,
-    config?: AxiosRequestConfig
-  ): Promise<R>;
+  request<T = any>(config: AxiosRequestConfig): Promise<T>;
+  get<T = any>(url: string, config?: AxiosRequestConfig): Promise<T>;
+  delete<T = any>(url: string, config?: AxiosRequestConfig): Promise<T>;
+  post<T = any>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T>;
+  put<T = any>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T>;
+  patch<T = any>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T>;
 }
-
+// document.cookie =
+//   'k.sess=eyJ1c2VyIjp7ImxvZ2luIjoibGl1amlhbkNOIiwibmFtZSI6IuWImOWBpSIsInJvbGUiOiJhZG1pbiJ9LCJfZXhwaXJlIjoxNjExMzI3Mjc2NjM3LCJfbWF4QWdlIjoyNTkyMDAwMDB9';
+// document.cookie = 'k.sess.sig=jNLVDh2QDY9MYnsrkYo-D3ZXMak';
 const request: MyAxiosInstance = axios.create({
   baseURL: 'https://liujiancn.cn/api/v1',
+  // baseURL: '/api/v1',
   withCredentials: true,
-  timeout: 1000 * 20
+  timeout: 1000 * 20,
+  validateStatus: (status) => status >= 200,
 });
 
 // Add a request interceptor
@@ -60,16 +50,18 @@ request.interceptors.response.use(
       }
       // 登录拦截
       if (data.code === 30001) {
-        window.location.href = '/app/login';
+        // TODO 登录地址
+        window.location.href = '/login';
       }
       return Promise.reject(new Error(data.message || '系统错误'));
     }
     if (data.ok === true) {
-      return data;
+      return data.data;
     }
     return Promise.reject(new Error('格式错误'));
   },
   (err) => {
+    console.log(err);
     return Promise.reject(err.message);
   }
 );
@@ -84,8 +76,8 @@ interface GithubResponse extends AxiosInstance {
 export const githubRequest: GithubResponse = axios.create({
   baseURL: 'https://api.github.com',
   headers: {
-    Authorization: 'token 7228f2a03ca8bd3c00b3983eb7b04728c5395f8e'
-  }
+    Authorization: 'token 7228f2a03ca8bd3c00b3983eb7b04728c5395f8e',
+  },
 });
 
 githubRequest.interceptors.response.use(

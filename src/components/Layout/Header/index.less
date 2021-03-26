@@ -1,30 +1,36 @@
-.header {
-  height: 48px;
-  line-height: 48px;
-  padding: 0 30px;
+.header() {
+  height: 64px;
+  line-height: 64px;
   background: #fff;
-  box-shadow: 0 2px 8px #f0f1f2;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   position: relative;
   z-index: 2;
-
+  margin-bottom: 20px;
+}
+.lgHeader {
+  background: @background;
+  .headerContent {
+    .mainArea();
+    .header();
+  }
   .logo {
     width: 170px;
     padding-right: 30px;
     text-align: center;
     position: relative;
+    height: 64px;
     &::after {
       content: '';
       display: block;
       position: absolute;
       height: 30px;
-      top: 9px;
+      top: 17px;
       right: 0;
       border-right: 1px solid #f0f0f0;
     }
   }
-
   .right {
     flex: 1;
     display: flex;
@@ -42,7 +48,10 @@
         height: 31px;
         border: none;
         border-bottom: 1px solid #f0f0f0;
-        box-shadow: none;
+        box-shadow: none !important;
+      }
+      .ant-select-selector {
+        .ant-input-search-button;
       }
     }
   }

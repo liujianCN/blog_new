@@ -1,8 +1,7 @@
 import React, { useCallback } from 'react';
 import { SendOutlined } from '@ant-design/icons';
 
-import { asyncActionAddBlog, asyncActionUpdateBlog } from '@/store/thunk/models/draft/actions';
-import { StoreState } from '@/store/thunk/reducer';
+import { StoreState, storeActions } from '@store/index';
 import { message } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -16,15 +15,15 @@ const Submit = ({ editor }: PluginProps) => {
     const data = {
       title,
       belong,
-      content: editor.getMdValue()
+      content: editor.getMdValue(),
     };
     if (id) {
-      (dispatch(asyncActionUpdateBlog({ id, ...data })) as any).then(() => {
-        console.log('修改成功！');
+      dispatch(storeActions.draft.effects.modifyBlog({ id, ...data })).then(() => {
+        message.success('修改成功');
       });
+      return;
     }
-    (dispatch(asyncActionAddBlog(data)) as any).then((res: any) => {
-      console.log(res);
+    dispatch(storeActions.draft.effects.addBlog(data)).then(() => {
       message.success('创建成功');
     });
   }, [belong, dispatch, editor, id, title]);

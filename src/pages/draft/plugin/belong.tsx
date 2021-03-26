@@ -1,31 +1,21 @@
-import React, { useCallback, useMemo } from 'react';
-import { Input, Popover, Tag } from 'antd';
+import React, { useCallback, useMemo, useState } from 'react';
+import { Popover, Tag } from 'antd';
 import { FlagOutlined, CheckCircleOutlined } from '@ant-design/icons';
-import { actionSaveDraftBelong, actionSaveDraftTitle } from '@/store/thunk/models/draft/actions';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { StoreState } from '@/store/thunk/reducer';
+import { StoreState, storeActions } from '@store/index';
 
 const Belong = () => {
   const dispatch = useDispatch();
-  const { belong, title } = useSelector((state: StoreState) => state.draft);
+  const [visible, setVisible] = useState(false);
+  const { belong } = useSelector((state: StoreState) => state.draft);
   const handleItemClick = useCallback(
     (text: string) => {
-      dispatch(actionSaveDraftBelong(text));
+      dispatch(storeActions.draft.reducers.save({ belong: text }));
+      setVisible(false);
     },
     [dispatch]
   );
-
-  const handleTitleChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      dispatch(actionSaveDraftTitle(e.target.value));
-    },
-    [dispatch]
-  );
-
-  const popTitle = useMemo(() => {
-    return <Input className="draft-title" value={title} onChange={handleTitleChange} />;
-  }, [handleTitleChange, title]);
 
   const content = useMemo(() => {
     return (
@@ -37,7 +27,7 @@ const Belong = () => {
           { text: 'react', color: 'orange' },
           { text: 'redux', color: 'gold' },
           { text: 'router', color: 'lime' },
-          { text: 'axios', color: 'green' }
+          { text: 'axios', color: 'green' },
         ].map(({ text, color }) => (
           <Tag
             color={color}
@@ -56,7 +46,7 @@ const Belong = () => {
   }, [belong, handleItemClick]);
   return (
     <span className="button" title="belong">
-      <Popover title={popTitle} content={content} trigger="click">
+      <Popover visible={visible} content={content} onVisibleChange={setVisible} trigger="click">
         <FlagOutlined />
       </Popover>
     </span>

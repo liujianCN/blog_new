@@ -40,3 +40,5 @@ declare module '*.less' {
 interface Window {
   __REDUX_DEVTOOLS_EXTENSION_COMPOSE__: () => void;
 }
+
+declare type NodeEnv = 'production' | 'development';

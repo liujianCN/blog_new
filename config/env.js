@@ -36,7 +36,11 @@ module.exports = {
 
   // 常用变量
   port: 3008,
-  proxy: undefined,
+  proxy: {
+    // '/api': 'https://liujiancn.cn',
+    // changeOrigin: true,
+    // '/api': 'http://127.0.0.1:3000'
+  },
   outputPublicPath: '/',
   externals: {
     react: 'React',

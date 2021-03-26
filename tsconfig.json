@@ -18,12 +18,7 @@
     "baseUrl": "./",
     "paths": {
       "@/*": ["src/*"],
-      "@components/*": ["src/components/*"],
-      "@hooks/*": ["src/hooks/*"],
-      "@page/*": ["src/page/*"],
-      "@server/*": ["src/server/*"],
-      "@thunk/*": ["src/store/thunk/*"],
-      "@utils/*": ["src/utils/*"]
+      "@store/*": ["src/store/thunk/*"]
     },
     "experimentalDecorators": true
   },

@@ -1,0 +1,32 @@
+.draftContainer {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  .title {
+    height: 48px;
+    line-height: 48px;
+    background: @background;
+    display: flex;
+    align-items: center;
+    padding-right: 20px;
+    :global {
+      .ant-input {
+        color: #000;
+        font-weight: 700;
+        font-size: 20px;
+        .noneBorderInput();
+      }
+    }
+  }
+  :global {
+    .rc-md-editor {
+      height: calc(100% - 48px);
+    }
+  }
+}
+.tagInput {
+  display: flex;
+}

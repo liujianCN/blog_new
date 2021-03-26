@@ -4,56 +4,73 @@ import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-d
 import zhCN from 'antd/lib/locale/zh_CN';
 import moment from 'moment';
 import 'moment/locale/zh-cn';
-import Layout from '@components/Layout';
+import Layout from '@/components/Layout';
 import Home from './home';
 import Draft from './draft';
+import Detail from './detail';
 import Repos from './repos';
 import Repo from './repos/repo';
+import Example from './example';
+import Login from './login';
 
 import './app.less';
+import '@/assets/css/draft.global.less';
 
 moment.locale('zh-cn');
 
 const routes = [
   {
+    path: '/example',
+    Component: Example,
+  },
+  {
     path: '/home',
-    Component: Home
+    Component: Home,
   },
   {
     path: '/draft',
-    Component: Draft
+    Component: Draft,
   },
   {
     path: '/draft/:id',
-    Component: Draft
+    Component: Draft,
+  },
+  {
+    path: '/blog/:id',
+    Component: Detail,
   },
   // 仓库列表
   {
     path: '/repos',
-    Component: Repos
+    Component: Repos,
   },
   // 仓库详情
   {
     path: '/repos/:repo/:branch',
-    Component: Repo
-  }
+    Component: Repo,
+  },
 ];
 
-export default () => {
+const RootRouter = () => {
   return (
     <ConfigProvider locale={zhCN}>
       <Router>
-        <Layout>
-          <Switch>
+        <Switch>
+          <Route path="/login" exact>
+            <Login />
+          </Route>
+          <Layout>
             <Redirect path="/" exact to="/home" />
             {routes.map(({ path, Component }) => (
               <Route path={path} key={path} exact>
                 <Component />
               </Route>
             ))}
-          </Switch>
-        </Layout>
+          </Layout>
+        </Switch>
       </Router>
     </ConfigProvider>
   );
 };
+
+export default RootRouter;

@@ -1,51 +1,51 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 import React, { memo } from 'react';
-import { Menu, Grid } from 'antd';
+import { Menu } from 'antd';
 import { Link, useLocation } from 'react-router-dom';
-import HeaderMenu from '../Header/Menu';
+// import HeaderMenu from '../Header/Menu';
 
 import styles from './index.less';
 
 const menu = [
   {
     title: '代码',
-    link: '/repos'
+    link: '/repos',
   },
   {
     title: 'xie xie',
-    link: '/draft'
+    link: '/draft',
   },
   {
     title: '基础',
     children: [
       {
-        title: 'html'
+        title: 'html',
       },
       {
-        title: 'css'
+        title: 'css',
       },
       {
-        title: 'js'
-      }
-    ]
+        title: 'js',
+      },
+    ],
   },
   {
     title: '框架',
     children: [
       {
-        title: 'react'
+        title: 'react',
       },
       {
-        title: 'redux'
+        title: 'redux',
       },
       {
-        title: 'router'
+        title: 'router',
       },
       {
-        title: 'axios'
-      }
-    ]
-  }
+        title: 'axios',
+      },
+    ],
+  },
 ];
 const SiderMenu = () => {
   const location = useLocation();
@@ -56,7 +56,7 @@ const SiderMenu = () => {
       selectedKeys={[location.pathname]}
       className={styles.menu}
     >
-      {!Grid.useBreakpoint().lg && <HeaderMenu mode="vertical" />}
+      {/* {!Grid.useBreakpoint().lg && <HeaderMenu mode="vertical" />} */}
       {menu.map(({ title, children, link }) =>
         children ? (
           <Menu.ItemGroup key={title} title={title}>

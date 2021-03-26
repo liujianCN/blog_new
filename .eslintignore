@@ -11,3 +11,4 @@ public
 config
 .eslintrc*
 .prettierrc*
+*.config.js

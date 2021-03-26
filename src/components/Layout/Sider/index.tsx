@@ -1,9 +1,8 @@
-import { CSSProperties, useCallback } from 'react';
+import { CSSProperties } from 'react';
 import { Drawer, Button } from 'antd';
 import { MenuOutlined } from '@ant-design/icons';
-import { useSelector, useDispatch } from 'react-redux';
-import { StoreState } from '@thunk/reducer';
-import { globalActions } from '@thunk/models/global';
+import { useSelector } from 'react-redux';
+import { StoreState } from '@store/index';
 
 import styles from './index.less';
 
@@ -11,16 +10,16 @@ import SiderMenu from './Menu';
 
 const drawerBodyStyle: CSSProperties = {
   padding: '0',
-  background: `url("https://cdn.jsdelivr.net/gh/BNDong/Cnblogs-Theme-SimpleMemory@master/img/webp/home_top_bg.webp") no-repeat center`
+  background: `url("https://cdn.jsdelivr.net/gh/BNDong/Cnblogs-Theme-SimpleMemory@master/img/webp/home_top_bg.webp") no-repeat center`,
 };
 
 const Sider = () => {
-  const menuVisible = useSelector((state: StoreState) => state.global.menuVisible);
-  const dispatch = useDispatch();
+  const { menuVisible } = useSelector((state: StoreState) => state.common);
+  // const dispatch = useDispatch();
 
-  const handleClose = useCallback(() => {
-    dispatch(globalActions.toggleMenuVisible(false));
-  }, [dispatch]);
+  // const handleClose = useCallback(() => {
+  //   // dispatch(storeActions.global.reducers.save({ menuVisible: true}));
+  // }, [dispatch]);
 
   // return screen.lg ? (
   //   <Layout.Sider className={styles.sider}>
@@ -43,7 +42,7 @@ const Sider = () => {
         className={styles.menuButton}
         icon={<MenuOutlined />}
         onClick={() => {
-          dispatch(globalActions.toggleMenuVisible(true));
+          // dispatch(storeActions.global.reducers.save({ menuVisible: true }));
         }}
         ghost
       >
@@ -54,7 +53,7 @@ const Sider = () => {
         bodyStyle={drawerBodyStyle}
         closable={false}
         visible={menuVisible}
-        onClose={handleClose}
+        // onClose={handleClose}
       >
         <SiderMenu />
       </Drawer>

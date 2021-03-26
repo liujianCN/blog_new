@@ -1,0 +1,1 @@
+export const SAVE_DRAFT_TITLE = 'SAVE_DRAFT_TITLE';

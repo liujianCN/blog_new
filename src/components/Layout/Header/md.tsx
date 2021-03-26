@@ -1,27 +1,29 @@
 import React, { memo } from 'react';
 import { MenuOutlined } from '@ant-design/icons';
-import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { globalActions } from '@thunk/models/global';
+// import { useDispatch } from 'react-redux';
+// import { globalActions } from '@/store/saga';
 
-import SiderMenu from '../Sider';
+// import SiderMenu from '../Sider';
+import ScreenFull from '../../ScreenFull';
 
 import styles from './index.less';
 
 const SmHeader = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   return (
     <div className={styles.smHeader}>
       <MenuOutlined
         className={styles.fold}
         onClick={() => {
-          dispatch(globalActions.toggleMenuVisible(true));
+          // dispatch(globalActions.toggleMenuVisible(true));
         }}
       />
       <Link to="/" className={styles.smLogo}>
         logo
       </Link>
-      <SiderMenu />
+      <ScreenFull />
+      {/* <SiderMenu /> */}
     </div>
   );
 };

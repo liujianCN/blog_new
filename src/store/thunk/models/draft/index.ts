@@ -1,44 +1,90 @@
-import { AnyAction } from 'redux';
-import * as reposTypes from './types';
+/* eslint-disable @typescript-eslint/no-use-before-define */
+import { actionCreatorsCreator, Model } from '@store/d_thunk';
+import * as draftApi from '@/server/draft';
+import { Belong, Belongs } from './types';
 
-export * as reposActions from './actions';
-
-export interface IBlogDetail {
-  _id: string;
+export interface State {
   title: string;
   belong: string;
   content: string;
+  belongs: Belongs[];
+  belongList: Belong[];
 }
 
-export type IDraftState = Omit<IBlogDetail, '_id'>;
-
-const initialState: IDraftState = {
+const initialState: State = {
   title: '',
   belong: '',
-  content: ''
+  content: '',
+  belongs: [],
+  belongList: [],
 };
 
-export default (
-  state: IDraftState = initialState,
-  action: IDraftState & AnyAction
-): IDraftState => {
-  switch (action.type) {
-    case reposTypes.SAVE_DRAFT_BELONG:
+export interface EffectsPayload {
+  getBlogDetail: draftApi.IGetBlogDetailParams;
+  addBlog: draftApi.IAddBlogParams;
+  modifyBlog: draftApi.IModifyBlogParams;
+  getBlogBelongs: void;
+  addBelong: draftApi.AddBelongParams;
+}
+export interface ReducersPayload {
+  genBelongs: { belongs: Belong[] };
+  resetDraft: void;
+}
+
+export const model: Model<State, EffectsPayload, ReducersPayload> = {
+  namespace: 'draft',
+  state: initialState,
+  effects: {
+    async getBlogDetail(data: draftApi.IGetBlogDetailParams, dispatch) {
+      const res = await draftApi.getBlogDetail(data);
+      console.log();
+      dispatch(actions.reducers.save(res));
+    },
+    async addBlog(data) {
+      const res = await draftApi.addBlog(data);
+      console.log(res);
+      return res;
+    },
+    async modifyBlog(data) {
+      const res = await draftApi.modifyBlog(data);
+      console.log(res);
+      return res;
+    },
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    async getBlogBelongs(_, dispatch) {
+      const res = await draftApi.getBelongs();
+      dispatch(actions.reducers.genBelongs({ belongs: res }));
+      return res;
+    },
+    async addBelong(data) {
+      const res = await draftApi.addBelong(data);
+      return res;
+    },
+  },
+  reducers: {
+    genBelongs(state, { payload: { belongs: list } }) {
+      const belongs: any = list.filter((item) => item.belong === '');
+
+      belongs.forEach((item: any) => {
+        // eslint-disable-next-line no-param-reassign
+        item.children = list.filter(({ belong }) => belong === item.key);
+      });
       return {
         ...state,
-        belong: action.belong
+        belongs,
+        belongList: list,
       };
-    case reposTypes.SAVE_DRAFT_TITLE:
+    },
+    resetDraft(state) {
       return {
         ...state,
-        title: action.title
+        title: '',
+        belong: '',
+        content: '',
+        belongName: '请选择',
       };
-    case reposTypes.SAVE_DRAFT_CONTENT:
-      return {
-        ...state,
-        content: action.content
-      };
-    default:
-      return state;
-  }
+    },
+  },
 };
+
+export const actions = actionCreatorsCreator(model);

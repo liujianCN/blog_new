@@ -10,8 +10,8 @@ const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
-const ESLintPlugin = require('eslint-webpack-plugin')
-const FriendlyErrorsWebpackPlugin = require('@soda/friendly-errors-webpack-plugin');
+const ESLintPlugin = require('eslint-webpack-plugin');
+const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 
 const {
   when,
@@ -25,7 +25,7 @@ const {
   port,
   proxy,
   outputPublicPath,
-  externals,
+  externals
 } = require('./env');
 
 // common function to get style loaders
@@ -44,16 +44,6 @@ const getStyleLoaders = (cssOptions, preProcessor) => {
     {
       loader: 'postcss-loader',
       options: {
-        ident: 'postcss',
-        plugins: () => [
-          require('postcss-flexbugs-fixes'),
-          require('postcss-preset-env')({
-            autoprefixer: {
-              flexbox: 'no-2009'
-            },
-            stage: 3
-          })
-        ],
         sourceMap: isEnvDevelopment
       }
     },
@@ -72,8 +62,10 @@ const getStyleLoaders = (cssOptions, preProcessor) => {
       {
         loader: 'style-resources-loader',
         options: {
-          patterns: resolveApp('src/assets/less/variables/theme.less'),
-          injector: 'append'
+          patterns: [
+            resolveApp('src/assets/css/mixin.less'),
+            resolveApp('src/assets/css/variable.less')
+          ]
         }
       }
     ])
@@ -115,7 +107,7 @@ module.exports = {
             safari10: true
           }
         },
-        extractComments: false, // 不提取注释，默认true
+        extractComments: false // 不提取注释，默认true
       }),
       new CssMinimizerPlugin()
     ],
@@ -135,57 +127,44 @@ module.exports = {
       })
     ]
   },
-  ...whenProd([{
-    externals,
-  }])[0],
+  ...whenProd([
+    {
+      externals
+    }
+  ])[0],
 
   devServer: {
     open: true,
-    host: "0.0.0.0", // 本机ip
+    host: '0.0.0.0', // 本机ip
     port,
     // port: 443,
     // https: true,
-    useLocalIp: true,
+    // useLocalIp: true,
     hot: true,
     disableHostCheck: true,
     historyApiFallback: true,
     noInfo: true,
-    proxy,
+    proxy
   },
   stats: 'errors-only',
   // TODO package中的browserslist会使热加载失效，开发指定为web
   // https://github.com/pmmmwh/react-refresh-webpack-plugin/issues/235
-  target: isEnvProduction ? "browserslist" : "web",
+  // target: isEnvProduction ? 'browserslist' : 'web',
 
   plugins: [
     new ProgressBarPlugin({}),
-    new webpack.NoEmitOnErrorsPlugin(),
     ...whenDev([new FriendlyErrorsWebpackPlugin(), new ReactRefreshWebpackPlugin()]),
     ...whenProd([new CleanWebpackPlugin({})]),
     new HtmlWebpackPlugin({
-      title: "我的App",
+      title: '我的App',
       template: paths.appHtml,
       inject: true,
-      ...whenProd([{
-        minify: {
-          removeComments: true,
-          collapseWhitespace: true,
-          removeRedundantAttributes: true,
-          useShortDoctype: true,
-          removeEmptyAttributes: true,
-          removeStyleLinkTypeAttributes: true,
-          keepClosingSlash: true,
-          minifyJS: true,
-          minifyCSS: true,
-          minifyURLs: true
-        }
-      }])[0],
-      isEnvProduction,
+      isEnvProduction
     }),
     //  src里里使用process.env.API_ENV
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
-      'process.env.API_ENV': JSON.stringify(process.env.API_ENV),
+      'process.env.API_ENV': JSON.stringify(process.env.API_ENV)
     }),
     ...whenProd([
       new MiniCssExtractPlugin({
@@ -200,10 +179,9 @@ module.exports = {
     ...whenDev([
       new ESLintPlugin({
         // Plugin options
-        extensions: ['js', 'jsx', 'ts', 'tsx'],
-        // ESLint class options
-        baseConfig: require(resolveApp('.eslintrc.js')),
-      }),]),
+        extensions: ['js', 'jsx', 'ts', 'tsx']
+      })
+    ]),
     ...when(isEnvProduction && process.env.ANALYZE, [new BundleAnalyzerPlugin()])
   ],
   module: {
@@ -233,8 +211,10 @@ module.exports = {
               ],
 
               plugins: [
-                ["@babel/plugin-proposal-decorators", { "legacy": true }],
-                ["@babel/plugin-proposal-class-properties", { "loose": true }],
+                '@babel/plugin-proposal-nullish-coalescing-operator',
+                '@babel/plugin-proposal-optional-chaining',
+                ['@babel/plugin-proposal-decorators', { legacy: true }],
+                ['@babel/plugin-proposal-class-properties', { loose: true }],
                 [
                   '@babel/plugin-transform-runtime',
                   {

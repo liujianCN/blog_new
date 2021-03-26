@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useCallback, useEffect } from 'react';
 import { Card, List, Space, Divider, Select } from 'antd';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
-import { StoreState } from '@thunk/reducer';
-import { reposActions } from '@thunk/models/repos';
+// import { StoreState } from '@thunk/reducer';
+// import { reposActions } from '@thunk/models/repos';
 import moment from 'moment';
 
 import styles from './index.less';
@@ -13,14 +14,14 @@ const Repo = () => {
   const history = useHistory();
   const { repo, branch } = useParams<{ repo: string; branch: string }>();
   console.log(repo, branch);
-  const { branchList, commitList } = useSelector((state: StoreState) => state.repos);
+  // const { branchList, commitList } = useSelector((state: StoreState) => state.repos);
 
   useEffect(() => {
-    dispatch(reposActions.asyncActionGeiGithubRepoBranches(repo));
+    // dispatch(reposActions.asyncActionGeiGithubRepoBranches(repo));
   }, [dispatch, repo]);
 
   useEffect(() => {
-    dispatch(reposActions.asyncActionGeiGithubRepoCommits(repo, branch));
+    // dispatch(reposActions.asyncActionGeiGithubRepoCommits(repo, branch));
   }, [dispatch, repo, branch]);
 
   const handleBranchChange = useCallback(
@@ -31,17 +32,17 @@ const Repo = () => {
   );
   return (
     <Card
-      title={
-        <Select value={branch} style={{ width: 120 }} onChange={handleBranchChange}>
-          {branchList.map(({ name }) => (
-            <Select.Option key={name} value={name}>
-              {name}
-            </Select.Option>
-          ))}
-        </Select>
-      }
+    // title={
+    //   <Select value={branch} style={{ width: 120 }} onChange={handleBranchChange}>
+    //     {branchList.map(({ name }) => (
+    //       <Select.Option key={name} value={name}>
+    //         {name}
+    //       </Select.Option>
+    //     ))}
+    //   </Select>
+    // }
     >
-      <List
+      {/* <List
         // bordered
         dataSource={commitList}
         renderItem={({
@@ -57,9 +58,6 @@ const Repo = () => {
                 {message}
                 {sha.slice(0, 6)}
               </div>
-              {/* <div className={styles.description}>
-
-              </div> */}
               <Space className={styles.subtext} split={<Divider type="vertical" />}>
                 <div>{name}</div>
                 <div>提交于{moment(date).format('MMM-Do HH:mm')}</div>
@@ -67,7 +65,7 @@ const Repo = () => {
             </div>
           </List.Item>
         )}
-      />
+      /> */}
     </Card>
   );
 };

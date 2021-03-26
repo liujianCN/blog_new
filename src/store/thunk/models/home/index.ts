@@ -1,27 +1,36 @@
-import { AnyAction } from 'redux';
-import * as homeTypes from './types';
+/* eslint-disable @typescript-eslint/no-use-before-define */
+import { actionCreatorsCreator, Model } from '@store/d_thunk';
+import { getBlogPage, GetBlogPageParams } from '@/server/draft';
+import { Blog } from './types';
 
-export * as homeActions from './actions';
+export interface State {
+  page: Blog[];
+}
 
-const initialState = {
-  number: 0
+const initialState: State = {
+  page: [],
 };
 
-export type IHomeState = Readonly<typeof initialState>;
+export interface EffectsPayload {
+  getBlogPage: GetBlogPageParams;
+}
+export interface ReducersPayload {}
 
-export default (state: IHomeState = initialState, action: AnyAction) => {
-  switch (action.type) {
-    case homeTypes.HOME_ADD:
-      return {
-        ...state,
-        number: state.number + (action.number || 1)
-      };
-    case homeTypes.HOME_MIN:
-      return {
-        ...state,
-        number: state.number - (action.number || 1)
-      };
-    default:
-      return state;
-  }
+export const model: Model<State, EffectsPayload, ReducersPayload> = {
+  namespace: 'home',
+  state: initialState,
+  effects: {
+    async getBlogPage(data, dispatch, getState) {
+      const { page } = getState().home;
+      const { records } = await getBlogPage(data);
+      dispatch(
+        actions.reducers.save({
+          page: [...page, ...records],
+        })
+      );
+    },
+  },
+  reducers: {},
 };
+
+export const actions = actionCreatorsCreator(model);

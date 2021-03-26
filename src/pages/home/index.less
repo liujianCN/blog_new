@@ -1,8 +1,61 @@
 .home {
-  height: 100%;
-  .header {
-    height: 100%;
-    background: url('https://cdn.jsdelivr.net/gh/BNDong/Cnblogs-Theme-SimpleMemory@master/img/webp/home_top_bg.webp')
-      no-repeat center / cover;
+  display: flex;
+  position: relative;
+  &.lg {
+    padding-right: 253px;
+  }
+  .list {
+    flex: 1;
+  }
+  :global {
+    .ant-list-item {
+      .ant-card-body {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+    }
+  }
+  .info {
+    flex: 1;
+    .meta {
+      color: #b2bac2;
+      font-size: 12px;
+      margin-bottom: 6px;
+    }
+    .title {
+      color: #2e3135;
+      font-size: 16px;
+      font-weight: 600;
+    }
+    :global {
+      .ant-btn {
+        color: #b2bac2;
+        &:focus {
+          border-color: #b2bac2;
+        }
+      }
+    }
+  }
+  img {
+    width: 60px;
+    height: 60px;
+    margin-left: 24px;
+    object-fit: cover;
+  }
+  .desc {
+    position: absolute;
+    top: 0;
+    .intersect {
+      position: fixed;
+      top: 20px;
+      width: 233px;
+    }
+    width: 233px;
+    :global {
+      .ant-card {
+        margin-bottom: 20px;
+      }
+    }
   }
 }
